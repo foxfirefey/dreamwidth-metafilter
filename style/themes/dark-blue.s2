@@ -1,0 +1,70 @@
+layerinfo "type" = "theme";
+layerinfo "name" = "Metafilter Blue Dark";
+
+set all_entrysubjects = true;
+set comment_indent_style = "responsive";
+set use_custom_friend_colors = true;
+
+set color_page_background = "#FFF"; # "#045286";
+set color_page_text = "#000";
+set color_page_link = "#005b95";
+set color_page_link_active = "#76aed1";
+set color_page_link_hover = "#76aed1";
+set color_page_link_visited = "#3f8cbc";
+set color_page_border = "#9CC754";
+
+set color_module_background = "#f7f7f7";
+set color_module_text = "#000";
+# set color_module_link;
+# set color_module_link_active;
+# set color_module_link_hover;
+# set color_module_link_visited;
+set color_module_title_background = "#e6e6e6";
+set color_module_title = "#000";
+# set color_module_border;
+
+set color_comment_admin_background = "#d5f3ff";
+set color_comment_admin_border = "#88c2d8";
+set color_comment_screened_background = "#fcf8e3";
+set color_comment_screened_border = "#f7ecb5";
+set color_comment_frozen_background = "#e6e6e6";
+set color_comment_frozen_border = "#b7b7b7";
+
+set color_header_background = "#045286";
+set color_header_title = "#FFF";
+set color_header_subtitle = "#9CC754";
+set color_page_title = "#9CC754";
+set color_header_border = "#9CC754";
+
+set color_footer_background = "#065a8f";
+set color_footer_border = "#88c2d8";
+set color_footer_text = "#FFF";
+set color_footer_link = "#9cc754";
+
+# set color_footer_link_active;
+# set color_footer_link_hover;
+# set color_footer_link_visited;
+
+set color_entry_background = "#fff";
+set color_entry_footer_background = "#f7f7f7";
+set color_entry_footer_text = "#737373";
+# set color_entry_text; -- 
+# set color_entry_link;
+# set color_entry_link_active;
+# set color_entry_link_hover;
+# set color_entry_link_visited;
+# set color_entry_title_background;
+# set color_entry_title;
+# set color_entry_interaction_links;
+# set color_entry_interaction_links_active;
+# set color_entry_interaction_links_hover;
+# set color_entry_interaction_links_visited;
+# set color_entry_border;
+
+# set color_comment_title_background;
+# set color_comment_title;
+
+# set control_strip_bgcolor;
+# set control_strip_fgcolor;
+# set control_strip_bordercolor;
+# set control_strip_linkcolor;

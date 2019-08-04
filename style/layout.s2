@@ -1,0 +1,773 @@
+layerinfo "type" = "layout";
+ 
+# put the layout's name here
+layerinfo "name" = "Metafilter";
+ 
+# put your username here
+layerinfo "author_name" = "foxfirefey";
+ 
+# makes it so others can preview your layout and see its source
+layerinfo "is_public"       = 1;
+layerinfo "source_viewable" = 1;
+
+##===============================
+## Presentation
+##===============================
+
+propgroup presentation {
+    property use layout_type;
+    property use num_items_recent;
+    property use num_items_reading;
+    property use use_custom_friend_colors;
+    property use use_shared_pic;
+    property use use_journalstyle_entry_page;
+    property use margins_size;
+    property use margins_unit;
+    property use sidebar_width;
+    property use sidebar_width_doubled;
+    property use medium_breakpoint_width;
+    property use large_breakpoint_width;
+    property use custom_control_strip_colors;
+
+    property use reverse_sortorder_group;
+    property use reg_firstdayofweek;
+    property use tags_page_type;
+    property use num_items_icons;
+    property use icons_page_sort;
+
+    property use all_entrysubjects;
+    property use all_commentsubjects;
+    property use entry_datetime_format_group;
+    property use comment_datetime_format_group;
+    property use userpics_style_group;
+    property use userpics_position;
+    property use entry_metadata_position;
+    property use userlite_interaction_links;
+    property use entry_management_links;
+    property use comment_management_links;
+
+    property use comment_indent_style;
+    property use comment_indent_limit_mobile;
+    property use comment_indent_limit_desktop;
+    property use comment_indent_depth_caption;
+
+}
+
+set layout_type = "one-column";
+set sidebar_width = "15em";
+set sidebar_width_doubled = "30em";
+set userpics_position = "left";
+set use_custom_friend_colors = true;
+set custom_foreground_element = "userpic_border";
+set custom_background_element = "userpic_background";
+set all_entrysubjects = true;
+set comment_indent_style = "responsive";
+set use_custom_friend_colors = true;
+
+
+##===============================
+## Colors
+##===============================
+
+property Color color_header_border { des = "Header border color"; }
+property Color color_header_title { des =" Header title color"; }
+property Color color_header_subtitle { des = "Header subtitle color"; }
+
+property Color color_entry_footer_background { des = "Background color of the entry footer"; }
+property Color color_entry_footer_text { des = "Text color of the entry footer"; }
+
+property Color color_comment_admin_background { des = "Admin comment background color"; }
+property Color color_comment_admin_border { des = "Admin comment border"; }
+property Color color_comment_screened_background { des = "Screened comment background color"; }
+property Color color_comment_screened_border { des = "Screened comment border color"; }
+property Color color_comment_frozen_background { des = "Frozen comment background color"; }
+property Color color_comment_frozen_border { des = "Frozen border background color"; }
+
+property Color color_footer_border { des = "Footer border color"; }
+property Color color_footer_text { des = "Footer text color"; }
+
+propgroup colors {
+    property use color_page_background;
+    property use color_page_text;
+    property use color_page_link;
+    property use color_page_link_active;
+    property use color_page_link_hover;
+    property use color_page_link_visited;
+    property use color_page_border;
+
+    property use color_module_background;
+    property use color_module_text;
+    property use color_module_link;
+    property use color_module_link_active;
+    property use color_module_link_hover;
+    property use color_module_link_visited;
+    property use color_module_title_background;
+    property use color_module_title;
+    property use color_module_border;
+
+    property use color_header_background;
+    property use color_header_title;
+    property use color_header_subtitle;
+    property use color_header_border;
+    property use color_page_title;
+
+    property use color_footer_background;
+    property use color_footer_text;
+    property use color_footer_border;
+    property use color_footer_link;
+    property use color_footer_link_active;
+    property use color_footer_link_hover;
+    property use color_footer_link_visited;
+
+    property use color_entry_background;
+    property use color_entry_text;
+    property use color_entry_link;
+    property use color_entry_link_active;
+    property use color_entry_link_hover;
+    property use color_entry_link_visited;
+    property use color_entry_title_background;
+    property use color_entry_title;
+    property use color_entry_interaction_links;
+    property use color_entry_interaction_links_active;
+    property use color_entry_interaction_links_hover;
+    property use color_entry_interaction_links_visited;
+    property use color_entry_border;
+
+    property use color_comment_title_background;
+    property use color_comment_title;
+    property use color_comment_admin_background;
+    property use color_comment_admin_border;
+    property use color_comment_screened_background;
+    property use color_comment_screened_border;
+    property use color_comment_frozen_background;
+    property use color_comment_frozen_border;
+
+    property use control_strip_bgcolor;
+    property use control_strip_fgcolor;
+    property use control_strip_bordercolor;
+    property use control_strip_linkcolor;
+}
+
+##===============================
+## Modules
+##===============================
+
+# Explicitly define what sections the layout has available
+set module_layout_sections = "none|(none)|header|Header|one|Main Module Section|two|Secondary Module Section|footer|Footer Module Section";
+
+propgroup modules {
+    property use module_userprofile_group;
+    property use module_navlinks_group;
+    property use module_calendar_group;
+    property use module_links_group;
+    property use module_syndicate_group;
+    property use module_tags_group;
+    property use module_pagesummary_group;
+    property use module_active_group;
+    property use module_time_group;
+    property use module_poweredby_group;
+    property use module_customtext_group;
+    property use module_credit_group;
+    property use module_search_group;
+    property use module_cuttagcontrols_group;
+    property use module_subscriptionfilters_group;
+}
+
+set text_comment_date = "";
+set text_comment_from = "";
+
+# Taken from the example of Five AM
+property string module_navlinks_section_override {
+    values = "none|(none)|header|Header|one|Main Module Section|two|Secondary Module Section|footer|Footer Module Section";
+    grouped = 1;
+    }
+
+set grouped_property_override = { "module_navlinks_section" => "module_navlinks_section_override" };
+set module_navlinks_section = "header";
+
+##===============================
+## Text
+##===============================
+
+propgroup text {
+    property use text_module_userprofile;
+    property use text_module_links;
+    property use text_module_syndicate;
+    property use text_module_tags;
+    property use text_module_popular_tags;
+    property use text_module_pagesummary;
+    property use text_module_active_entries;
+    property use text_module_customtext;
+    property use text_module_customtext_url;
+    property use text_module_customtext_content;
+    property use text_module_credit;
+    property use text_module_search;
+    property use text_module_cuttagcontrols;
+    property use text_module_subscriptionfilters;
+
+    property use text_view_recent;
+    property use text_view_archive;
+    property use text_view_friends;
+    property use text_view_friends_comm;
+    property use text_view_network;
+    property use text_view_tags;
+    property use text_view_memories;
+    property use text_view_userinfo;
+
+    property use text_entry_prev;
+    property use text_entry_next;
+    property use text_edit_entry;
+    property use text_edit_tags;
+    property use text_mem_add;
+    property use text_tell_friend;
+    property use text_watch_comments;
+    property use text_unwatch_comments;
+
+    property use text_read_comments;
+    property use text_read_comments_friends;
+    property use text_read_comments_screened_visible;
+    property use text_read_comments_screened;
+    property use text_post_comment;
+    property use text_post_comment_friends;
+    property use text_permalink;
+
+    property use text_meta_location;
+    property use text_meta_mood;
+    property use text_meta_music;
+    property use text_meta_xpost;
+    property use text_tags;
+
+    property use text_stickyentry_subject;
+
+    property use text_max_comments;
+    property use text_skiplinks_back;
+    property use text_skiplinks_forward;
+}
+
+##===============================
+## Custom CSS
+##===============================
+
+propgroup customcss {
+    property use external_stylesheet;
+    property use include_default_stylesheet;
+    property use linked_stylesheet;
+    property use custom_css;
+}
+
+function Page::print()
+"The meat of each new layout. Describes how each page will look. In nearly all cases, the logic and decision-making processes should come from pre-existing functions in core2, and should not get written here. If you limit the structure of the page to HTML, function calls, and attached CSS, then you will be able to pick up all of the enhancements  and accessibility requirements managed by core2."
+{
+    """<!DOCTYPE html>\n<html lang="en">\n<head profile="http://www.w3.org/2006/03/hcard http://purl.org/uF/hAtom/0.1/ http://gmpg.org/xfn/11">\n""";
+    $this->print_meta_tags();
+    $this->print_head();
+    $this->print_stylesheets();
+    $this->print_head_title();
+    """</head>""";
+    $this->print_wrapper_start();
+    $this->print_control_strip();
+    """
+    <div id="canvas">
+        <div class="inner">
+            <div id="header">
+                <div class="inner">
+                    """;
+                    $this->print_header();
+                    $this->print_module_section("header");
+    """
+                </div><!-- end header>inner -->
+            </div><!-- end header -->
+            <div id="content">
+                <div class="inner">
+    """;
+                if ($*layout_type == "one-column-split") {
+    """
+                    <div id="secondary"><div class="inner">
+    """;
+                        $this->print_module_section("one");
+    """
+                    </div></div><!--  end secondary and secondary>inner -->
+    """;
+                }
+    """
+                    <div id="primary"><div class="inner">
+                        """;
+                        $this->print_body();
+    """
+                    </div></div><!-- end primary and primary>inner -->
+    """;
+                if ($*layout_type != "one-column-split") {
+    """
+                    <div id="secondary"><div class="inner">
+    """;
+                        $this->print_module_section("one");
+    """
+                    </div></div><!--  end secondary and secondary>inner -->
+    """;
+                }
+    """
+                    <div id="invisible-separator" style="float: left; width: 1px;"></div> <!-- this is a hack for IE7 + two-columns-right -->
+                    <div id="tertiary"><div class="inner">
+                        """;
+                        $this->print_module_section("two");
+    """
+                    </div></div><!-- end tertiary and tertiary>inner -->
+                    <div id="content-footer"></div>
+                </div><!-- end content>inner -->
+            </div> <!-- end content -->
+        </div> <!-- end canvas>inner -->
+    """;
+
+    """
+    <div id="footer">
+        <div class="inner">
+            """;
+            print safe """
+                <div class="page-top"><a href="#">$*text_page_top</a></div>
+        </div><!-- end footer>inner -->
+    </div><!-- end footer -->
+
+    </div> <!-- end canvas -->
+    """;
+    $this->print_wrapper_end();
+    """</html>""";
+}
+
+
+function Page::print_entry(Entry e)
+"The meat of each new layout. Describes how each page will look. In nearly all cases, the logic and decision-making processes should come from pre-existing functions in core2, and should not get written here. If you limit the structure of the page to HTML, function calls, and attached CSS, then you will be able to pick up all of the enhancements  and accessibility requirements managed by core2."
+{
+    ## For most styles, this will be overridden by FriendsPage::print_entry and such.
+    $e->print_wrapper_start();
+    """<div class="header">\n""";
+    """<div class="inner">\n""";
+    $e->print_subject();
+    $e->print_metatypes();
+    """</div>\n""";
+    """</div>\n""";
+    """<div>\n""";
+    """<div class="contents">\n""";
+    """<div class="inner">\n""";
+    $e->print_text();
+    $e->print_poster();
+    " on ";
+    $e->print_time();
+    $e->print_metadata();
+    """</div>\n""";
+    """</div>\n""";
+    """</div>\n""";
+
+    """<div class="footer">\n""";
+    """<div class="inner">\n""";
+    $e->print_tags();
+    $this->print_entry_footer($e);
+    "</div>\n</div>\n";
+
+    $e->print_wrapper_end();
+}
+
+function EntryPage::print_comment (Comment c) {
+# ReplyPage and EntryPage work nicest if they output the same structure for printing comments and entries, but this requires to manually change both ReplyPage::print_comment and EntryPage::print_entry.  Layout authors can also choose to override separately for different structures.
+
+    $c->print_wrapper_start();
+    """<div class="header">\n""";
+    """<div class="inner">\n""";
+    $c->print_depth_indicator();
+    $c->print_subject();
+    $c->print_metatypes();
+     if ( $c.comment_posted ) {
+         print safe "<div class='comment-posted'>$*text_comment_posted</div>";
+     }
+    """</div>\n""";
+    """</div>\n""";
+    """<div class="contents">\n""";
+    """<div class="inner">\n""";
+
+    $c->print_text();
+    """</div>\n""";
+    """</div>\n""";
+    """<div class="footer">\n""";
+    """<div class="inner">\n""";
+    $c->print_poster();
+    " on ";
+    $c->print_time();
+    $c->print_metadata();
+    if ($this.multiform_on) {
+        """<span class="multiform-checkbox">""";
+        print safe " <label for='ljcomsel_$c.talkid'>$*text_multiform_check</label> ";
+        $c->print_multiform_check();
+    "</span>";
+    }
+    $c->print_management_links();
+    $c->print_interaction_links();
+  
+    $c->print_reply_container();
+    "</div>\n</div>\n";
+    $c->print_wrapper_end();
+}
+
+function CommentInfo::print(Entry e, string{} opts) {
+  var string display_type = ($*entry_interaction_links == "text") ? " text-links" : " icon-links";
+  """<ul class="entry-interaction-links$display_type" data-quickreply-target="$opts{"target"}">\n""";
+  """<li class="entry-permalink first-item"><a href="$.permalink_url">$*text_permalink</a></li>\n""";
+  if ($.show_readlink) {
+      """<li class="entry-readlink">""";
+      $this->print_readlink();
+      "</li>\n";
+  } elseif ($.show_readlink_hidden) {
+    """<li class="entry-readlink" style="display:none">""";
+    $this->print_readlink();
+    "</li>\n";
+  }  
+  
+  if( $this.permalink_url->contains("?") ) {
+      print """<li class="entry-readlink"><a href="$this.permalink_url&view=flat#comments">"""+ """Flat""" + """</a></li>\n""";
+      print """<li class="entry-readlink"><a href="$this.permalink_url&view=flat&page=1000#comments">"""+ """Latest""" + """</a></li>\n""";
+  } else {
+      print """<li class="entry-readlink"><a href="$this.permalink_url?view=flat#comments">"""+ """Flat""" + """</a></li>""";        
+      print """<li class="entry-readlink"><a href="$this.permalink_url?view=flat&page=1000#comments">"""+ """Latest""" + """</a></li>\n""";
+  }  
+  
+  if ($.show_postlink and $.enabled) {
+      """<li class="entry-replylink">""";
+      if (isnull $e) {
+        $this->print_postlink();
+      } else {
+        $e->print_reply_link({ "linktext" => $opts{"linktext"}, "target" => $opts{"target"} });
+      }
+      "</li>\n";
+  }
+  "</ul>";
+}
+
+function Entry::print_interaction_links(string target)
+"Prints entry interaction links, aka # comments/leave a comment, with standardized CSS."
+{
+    var string display_type = ($*entry_interaction_links == "text") ? " text-links" : " icon-links";
+
+    var Page p = get_page();
+    var int count;
+    $count = 0;
+    if ($p isa EntryPage) {
+        var EntryPage ep = $p as EntryPage;
+        if ($.comments.enabled and $ep.comment_pages.total_subitems > 0) {
+            $count ++;
+            if ($count == 1) {
+                """<ul class="entry-interaction-links$display_type">""";
+            }
+            """<li class="entry-readlink first-item">""";
+            $this.comments->print_readlink();
+            "</li>\n";
+        }
+        if ($.comments.enabled) {
+            if ($.comments.maxcomments) {
+                print safe "$*text_max_comments";
+            } else {
+                $count ++;
+                if ($count == 1) {
+                    """<ul class="entry-interaction-links$display_type">""";
+                }
+                """<li class="entry-replylink""" + ( $count == 1 ? " first-item" : "" ) + """">""";
+                $ep->print_reply_link({ "linktext" => $*text_post_comment, "target" => $target });
+                "</li>\n";
+            }
+        }
+        if ($count > 0) {
+            "</ul>";
+        }
+    } elseif ($p.view == "read" or $p.view == "day" or $p.view == "recent" or $p.view == "network") {
+        $this.comments->print($this, { "linktext" => $*text_post_comment_friends, "target" => $this.dom_id + "-reply" });
+    } else {
+        $this.comments->print();
+    }
+}
+
+
+# this is the function that prints out the stylesheet of the layout
+function Page::print_default_stylesheet() {
+"""
+
+body {
+	font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+	background-color: $*color_page_background;
+}
+
+#header {
+	background-color: $*color_header_background;
+	color: $*color_header_title;
+	border-top: 5px solid $*color_header_border;
+}
+
+#header h1#title {
+	font-weight: normal;
+	font-size: 1.5em;
+	padding-left: 1rem;
+    color: $*color_header_title;
+    margin-bottom: .2em;
+}
+
+#header h2#subtitle {
+	font-weight: normal;
+	font-size: 1.0em;
+	padding-left: 1.5rem;
+	color: $*color_header_subtitle;
+    margin-top: .2em;
+}
+
+#header h2#pagetitle {
+	font-weight: normal;
+	font-size: 1.2em;
+	padding-left: 1rem;
+	color: $*color_page_title;
+}
+
+#header a {
+	color: $*color_header_title;
+	text-decoration: none;
+}
+
+#header .module-navlinks {
+	background-color: #88C2D8;
+	padding-left: 1rem;
+}
+
+#header .module-navlinks .module-content {
+	padding-left: 0em;
+	padding-right: 0em;
+}
+
+#header .module-navlinks a {
+	color: #065a8f;
+}
+
+#header .module-navlinks ul {
+	list-style: none;
+	margin: 0em;
+	padding: 0em;
+}
+
+#header .module-navlinks li {
+	display: inline-block;
+}
+
+#pagetitle {
+	background-color: #1185B1;
+	margin: 0em;
+	padding: .5em;
+}
+
+#content {
+	padding: 1em;
+	background-color: $*color_page_background;
+}
+
+a {
+	color: $*color_page_link;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:visited {
+	color: $*color_page_link_visited;
+}
+
+a:hover,a:focus {
+    color: $*color_page_link_hover;
+    text-decoration: underline;
+}
+
+a:active {
+    color: $*color_page_link_active;
+}
+
+a:focus{
+    outline:thin dotted;
+    outline:5px auto -webkit-focus-ring-color;
+    outline-offset:-2px
+}
+
+q {
+	font-style: italic;
+}
+
+.comment-content img,
+.entry-content img {
+	max-width: 100%;
+}
+
+.entry-content {
+	margin-bottom: .5em;
+}
+
+
+/* Make collapsed threads take up much less space */
+
+.comment-title {
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.partial .comment-title {
+	display: inline;
+	margin: 0px;
+}
+
+.partial .comment {
+	margin-bottom: .5em;
+	margin-top: .5em;
+}
+
+.comment .footer {
+	margin-top: .5em;
+}
+
+#comments .separator {
+	display: none;
+}
+
+.poster-ip {
+	display: block;
+}
+
+.edittime {
+	margin-top: .25em;
+}
+
+.entry-management-links,
+.entry-interaction-links,
+.comment-management-links,
+.comment-interaction-links {
+	list-style: none;
+	padding-left: 0em;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.entry-management-links li,
+.entry-interaction-links li,
+.comment-management-links li,
+.comment-interaction-links li {
+	display: inline;
+}
+
+hr.above-entry-interaction-links {
+	display: none;
+}
+
+hr.below-reply-container {
+	display: none;
+}
+
+.entry .footer {
+	background-color: $*color_entry_footer_background;
+	color: $*color_entry_footer_text;
+	padding: .5em;
+	margin-top: .5em;
+}
+
+.entry .content {
+	margin-bottom: .5em;
+}
+
+.comment-pages {
+	text-align: center;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.module {
+	background-color: $*color_module_background;
+	color: $*color_module_text;
+}
+
+.module-header {
+	background-color: $*color_module_title_background;
+	color: $*color_module_title;
+	padding: .5em;
+	font-size: 1rem;
+}
+
+.module-content {
+	padding: .5em;
+}
+
+
+/* why is this even an unordered list if it's just gonna number itself */
+.module-active ul,
+.module-pagesummary ul {
+	list-style: none;
+}
+
+.module ul {
+	padding-left: 0em;
+}
+
+.module .module-header {
+	margin-bottom: 0em;
+}
+
+.module-typelist ul,
+.module-tags_list ul {
+	padding-left: 1em;
+}
+
+.module-calendar table {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+/* Let the search box take up the entire width of the module */
+.module .search-box {
+	display: block;
+}
+
+.module .search-button {
+	margin-left: .25em;
+}
+
+.userpic {
+	float: right;
+}
+
+.entry,
+.comment {
+	margin-bottom: 2em;
+	clear: both;
+	margin-left: .5em;
+	max-width: 60em;
+	background-color: $*color_entry_background;
+}
+
+#comments .separator {
+	height: .5em;
+}
+
+.comment-wrapper.admin-post {
+	border-left: 2px solid $*color_comment_admin_border;
+	background-color: $*color_comment_admin_background;
+}
+
+.comment-wrapper.frozen {
+	border-left: 2px solid $*color_comment_frozen_border;
+	background-color: $*color_comment_frozen_background;
+}
+
+.comment-wrapper.screened {
+	border-left: 2px solid $*color_comment_screened_border;
+	background-color: $*color_comment_screened_border;
+}
+
+#footer {
+	background-color: $*color_footer_background;
+    color: $*color_footer_text;
+	padding: 1em;
+	border-top: 2px solid $*color_footer_border;
+}
+
+#footer a {
+	color: $*color_footer_link;
+}
+
+""";
+}
