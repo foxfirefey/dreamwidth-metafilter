@@ -15,10 +15,10 @@ set color_page_border = "#9CC754";
 
 set color_module_background = "#f7f7f7";
 set color_module_text = "#000";
-# set color_module_link;
-# set color_module_link_active;
-# set color_module_link_hover;
-# set color_module_link_visited;
+set color_module_link = "#005b95";
+set color_module_link_active = "#76aed1";
+set color_module_link_hover = "#76aed1";
+set color_module_link_visited= "#3f8cbc";
 set color_module_title_background = "#e6e6e6";
 set color_module_title = "#000";
 # set color_module_border;

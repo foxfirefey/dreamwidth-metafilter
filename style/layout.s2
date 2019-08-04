@@ -14,6 +14,10 @@ layerinfo "source_viewable" = 1;
 ## Presentation
 ##===============================
 
+property string theme_default_name { des = "Name of the default theme"; }
+property string theme_alternate_name { des = "Name of the alternate theme"; }
+property int theme_alternate_style_id { des = "ID of the alternate style"; }
+
 propgroup presentation {
     property use layout_type;
     property use num_items_recent;
@@ -50,8 +54,16 @@ propgroup presentation {
     property use comment_indent_limit_mobile;
     property use comment_indent_limit_desktop;
     property use comment_indent_depth_caption;
+  
+    property use theme_default_name;
+    property use theme_alternate_name;
+    property use theme_alternate_style_id;
 
 }
+
+set theme_default_name = "Light";
+set theme_alternate_name = "Dark";
+set theme_alternate_style_id = 3646376;
 
 set layout_type = "one-column";
 set sidebar_width = "15em";
@@ -132,6 +144,8 @@ propgroup colors {
     property use color_entry_interaction_links_hover;
     property use color_entry_interaction_links_visited;
     property use color_entry_border;
+    property use color_entry_footer_background;
+    property use color_entry_footer_text;
 
     property use color_comment_title_background;
     property use color_comment_title;
@@ -253,6 +267,21 @@ propgroup customcss {
     property use include_default_stylesheet;
     property use linked_stylesheet;
     property use custom_css;
+}
+
+function Page::print_header()
+{
+    """<div id="header-first-stripe">
+       <div id="style-switch">
+        <a class="default" href="$.base_url?style=original">$*theme_default_name</a>""";
+     """<a class="alternate" href="$.base_url?s2id=$*theme_alternate_style_id">$*theme_alternate_name</a>
+       </div>
+    """;
+    $this->print_global_title();
+    $this->print_global_subtitle();
+    """</div><div id="header-second-stripe">""";
+    $this->print_title();
+    """</div>""";
 }
 
 function Page::print()
@@ -485,11 +514,16 @@ function Entry::print_interaction_links(string target)
 
 # this is the function that prints out the stylesheet of the layout
 function Page::print_default_stylesheet() {
+    var string small_media_query = generate_small_media_query();
+    var string medium_media_query = generate_medium_media_query();
+    var string large_media_query = generate_large_media_query();
+  
 """
 
 body {
 	font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	background-color: $*color_page_background;
+    color: $*color_page_text;
 }
 
 #header {
@@ -498,12 +532,44 @@ body {
 	border-top: 5px solid $*color_header_border;
 }
 
+#header #style-switch {
+  float: right;
+  margin-right: 1rem;
+}
+
+#header #header-first-stripe a {
+	color: $*color_header_title;
+	text-decoration: none;
+}
+
+#header #style-switch a { display: inline-block; padding: .2em; margin-top: 1em; }
+
+#header #style-switch a.default, 
+#header #style-switch a.default:visited {
+  background-color: $*color_header_title;
+  color: $*color_header_background;
+  border: 1px solid $*color_header_title;
+}
+#header #style-switch a.default:hover {
+  color: $*color_header_border;
+}
+
+#header #style-switch a.alternate,
+#header #style-switch a.alternate:visited {
+  color: $*color_header_border;
+  border: 1px solid $*color_header_title;
+}
+#header #style-switch a.alternate:hover {
+  color: $*color_header_title;
+}
+
 #header h1#title {
 	font-weight: normal;
 	font-size: 1.5em;
 	padding-left: 1rem;
     color: $*color_header_title;
     margin-bottom: .2em;
+    margin-top: 0em;
 }
 
 #header h2#subtitle {
@@ -521,34 +587,19 @@ body {
 	color: $*color_page_title;
 }
 
-#header a {
-	color: $*color_header_title;
-	text-decoration: none;
-}
-
 #header .module-navlinks {
 	background-color: #88C2D8;
-	padding-left: 1rem;
-}
-
-#header .module-navlinks .module-content {
-	padding-left: 0em;
-	padding-right: 0em;
 }
 
 #header .module-navlinks a {
 	color: #065a8f;
 }
 
-#header .module-navlinks ul {
-	list-style: none;
-	margin: 0em;
-	padding: 0em;
+#header .module h2 {
+  margin-top: 0em;
 }
 
-#header .module-navlinks li {
-	display: inline-block;
-}
+#header .module-header, #header .module-content { padding-left: 1rem; }
 
 #pagetitle {
 	background-color: #1185B1;
@@ -706,16 +757,31 @@ hr.below-reply-container {
 	margin-bottom: 0em;
 }
 
+.module a {
+  color: $*color_module_link;
+}
+
+.module a:active {
+  color: $*color_module_link_active;
+}
+
+.module a:hover, .module a:focus {
+  color: $*color_module_link_hover;
+}
+
+.module a:visited {
+  color: $*color_module_link_visited;
+}
+
+
 .module-typelist ul,
 .module-tags_list ul {
-	padding-left: 1em;
 }
 
 .module-calendar table {
 	margin-left: auto;
 	margin-right: auto;
 }
-
 
 /* Let the search box take up the entire width of the module */
 .module .search-box {
@@ -767,6 +833,60 @@ hr.below-reply-container {
 
 #footer a {
 	color: $*color_footer_link;
+}
+
+/* SMALL ONLY */
+
+@media $small_media_query {
+#header .module-navlinks {
+	background-color: #88C2D8;
+	padding-left: 1rem;
+}
+
+#header .module-navlinks .module-content {
+	padding-left: 0em;
+	padding-right: 0em;
+}
+
+#header .module-navlinks a {
+	color: #065a8f;
+}
+
+#header .module-navlinks ul {
+	list-style: none;
+	margin: 0em;
+	padding: 0em;
+}
+
+#header .module-navlinks li {
+ }
+
+ 
+}
+
+/* MEDIUM AND ABOVE */
+
+@media $medium_media_query {
+
+#header .module-navlinks .module-content {
+	padding-left: 0em;
+	padding-right: 0em;
+}
+
+#header .module-navlinks ul {
+	list-style: none;
+	margin: 0em;
+	padding: 0em;
+}
+
+#header .module-navlinks li {
+	display: inline-block;
+}
+}
+
+/* LARGE AND ABOVE */
+
+@media $large_media_query {
 }
 
 """;
