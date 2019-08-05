@@ -378,16 +378,18 @@ function Page::print_entry(Entry e)
     """<div class="contents">\n""";
     """<div class="inner">\n""";
     $e->print_text();
-    $e->print_poster();
-    " on ";
-    $e->print_time();
-    $e->print_metadata();
     """</div>\n""";
     """</div>\n""";
     """</div>\n""";
 
     """<div class="footer">\n""";
     """<div class="inner">\n""";
+    """<div class="postedbyon">""";
+    $e->print_poster();
+    " on ";
+    $e->print_time();
+    """</div>""";
+    $e->print_metadata();
     $e->print_tags();
     $this->print_entry_footer($e);
     "</div>\n</div>\n";
@@ -417,9 +419,12 @@ function EntryPage::print_comment (Comment c) {
     """</div>\n""";
     """<div class="footer">\n""";
     """<div class="inner">\n""";
+    $c->print_userpic();
+    """<div class="postedbyon">""";  
     $c->print_poster();
     " on ";
     $c->print_time();
+    """</div>""";
     $c->print_metadata();
     if ($this.multiform_on) {
         """<span class="multiform-checkbox">""";
@@ -650,7 +655,6 @@ q {
 	margin-bottom: .5em;
 }
 
-
 /* Make collapsed threads take up much less space */
 
 .comment-title {
@@ -670,18 +674,38 @@ q {
 
 .comment .footer {
 	margin-top: .5em;
+	background-color: $*color_entry_footer_background;
+    min-height: 50px;
+}
+
+.comment .footer .userpic img {
+    max-height: 50px;
+    max-width: 50px;
 }
 
 #comments .separator {
 	display: none;
 }
 
-.poster-ip {
+.poster-ip, .multiform-checkbox {
 	display: block;
+    font-size: smaller;
+    margin-bottom: .25em;
 }
+
+.comment .postedbyon { padding-top: .5em; }
+
+.postedbyon, .metadata, .entry .footer .tag {
+  font-size: smaller;
+  margin-left: .2em;
+}
+
+.comment-management-links, .comment-interaction-links, .poster-ip, .multiform-checkbox { margin-left: .2em; }
 
 .edittime {
 	margin-top: .25em;
+    font-style: italic;
+    font-size: smaller;
 }
 
 .entry-management-links,
@@ -698,7 +722,23 @@ q {
 .entry-interaction-links li,
 .comment-management-links li,
 .comment-interaction-links li {
-	display: inline;
+	display: inline-block;
+}
+
+.entry-interaction-links li a {
+    display: inline-block;
+    padding: .2em;
+}
+
+.entry-replylink a {
+  display: inline-block;
+  background-color: $*color_page_link;
+  color: $*color_entry_background;
+}
+
+.entry-replylink a:hover, .entry-replylink a:focus {
+	color: $*color_entry_footer_background;
+    text-decoration: none;
 }
 
 hr.above-entry-interaction-links {
@@ -794,6 +834,7 @@ hr.below-reply-container {
 
 .userpic {
 	float: right;
+    padding-left: .1em;
 }
 
 .entry,
@@ -805,6 +846,9 @@ hr.below-reply-container {
 	background-color: $*color_entry_background;
 }
 
+.frozen .comment {	background-color: $*color_comment_frozen_background; }
+.screened .comment { background-color: $*color_comment_screened_border; }
+.admin-post .comment { background-color: $*color_comment_admin_background; }
 #comments .separator {
 	height: .5em;
 }
