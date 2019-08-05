@@ -846,24 +846,21 @@ hr.below-reply-container {
 	background-color: $*color_entry_background;
 }
 
-.frozen .comment {	background-color: $*color_comment_frozen_background; }
-.screened .comment { background-color: $*color_comment_screened_border; }
-.admin-post .comment { background-color: $*color_comment_admin_background; }
 #comments .separator {
 	height: .5em;
 }
 
-.comment-wrapper.admin-post {
+.comment-wrapper.admin-post .comment {
 	border-left: 2px solid $*color_comment_admin_border;
 	background-color: $*color_comment_admin_background;
 }
 
-.comment-wrapper.frozen {
+.comment-wrapper.frozen .comment {
 	border-left: 2px solid $*color_comment_frozen_border;
 	background-color: $*color_comment_frozen_background;
 }
 
-.comment-wrapper.screened {
+.comment-wrapper.screened .comment {
 	border-left: 2px solid $*color_comment_screened_border;
 	background-color: $*color_comment_screened_border;
 }
