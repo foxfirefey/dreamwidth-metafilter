@@ -297,69 +297,35 @@ function Page::print()
     $this->print_control_strip();
     """
     <div id="canvas">
-        <div class="inner">
-            <div id="header">
-                <div class="inner">
-                    """;
-                    $this->print_header();
-                    $this->print_module_section("header");
+      <div id="header">""";
+        $this->print_header();
+        $this->print_module_section("header");
+     """</div><!-- end header -->
+     <div id="content">""";
+        $this->print_body();
     """
-                </div><!-- end header>inner -->
-            </div><!-- end header -->
-            <div id="content">
-                <div class="inner">
-    """;
-                if ($*layout_type == "one-column-split") {
-    """
-                    <div id="secondary"><div class="inner">
-    """;
-                        $this->print_module_section("one");
-    """
-                    </div></div><!--  end secondary and secondary>inner -->
-    """;
-                }
-    """
-                    <div id="primary"><div class="inner">
-                        """;
-                        $this->print_body();
-    """
-                    </div></div><!-- end primary and primary>inner -->
-    """;
-                if ($*layout_type != "one-column-split") {
-    """
-                    <div id="secondary"><div class="inner">
-    """;
-                        $this->print_module_section("one");
-    """
-                    </div></div><!--  end secondary and secondary>inner -->
-    """;
-                }
-    """
-                    <div id="invisible-separator" style="float: left; width: 1px;"></div> <!-- this is a hack for IE7 + two-columns-right -->
-                    <div id="tertiary"><div class="inner">
-                        """;
-                        $this->print_module_section("two");
-    """
-                    </div></div><!-- end tertiary and tertiary>inner -->
-                    <div id="content-footer"></div>
-                </div><!-- end content>inner -->
-            </div> <!-- end content -->
-        </div> <!-- end canvas>inner -->
+      </div><!-- end content -->
+      <div id="content-footer"></div>
     """;
 
     """
+    <div id="secondary">
+    """;
+    $this->print_module_section("one");
+    """
+    </div>
+    <div id="tertiary">
+    """;
+    $this->print_module_section("two");
+    """
+    </div>
     <div id="footer">
-        <div class="inner">
             """;
             print safe """
                 <div class="page-top"><a href="#">$*text_page_top</a></div>
-        </div><!-- end footer>inner -->
     </div><!-- end footer -->
-
     </div> <!-- end canvas -->
-    """;
-    $this->print_wrapper_end();
-    """</html>""";
+    </html>""";
 }
 
 
@@ -725,18 +691,20 @@ q {
 	display: inline-block;
 }
 
-.entry-interaction-links li a {
+.entry-interaction-links li a, .comment-interaction-links .reply a {
     display: inline-block;
     padding: .2em;
 }
 
-.entry-replylink a {
+.entry-replylink a, .comment-interaction-links .reply a {
   display: inline-block;
   background-color: $*color_page_link;
   color: $*color_entry_background;
+  border-radius: 8px;
 }
 
-.entry-replylink a:hover, .entry-replylink a:focus {
+.entry-replylink a:hover, .entry-replylink a:focus,
+.comment-interaction-links .reply a:hover, .comment-interaction-links .reply a:visited {
 	color: $*color_entry_footer_background;
     text-decoration: none;
 }
@@ -842,7 +810,6 @@ hr.below-reply-container {
 	margin-bottom: 2em;
 	clear: both;
 	margin-left: .5em;
-	max-width: 60em;
 	background-color: $*color_entry_background;
 }
 
@@ -905,9 +872,45 @@ hr.below-reply-container {
  
 }
 
+
+
 /* MEDIUM AND ABOVE */
 
 @media $medium_media_query {
+  .comment .footer .userpic img {
+    max-height: 100px;
+    max-width: 100px;
+  }
+
+  #canvas {
+    display: grid;
+    grid-gap: 1em;
+    grid-template-columns: auto 20rem;
+    grid-template-areas:
+            "header header"
+            "content sidebar"
+            "tertiary tertiary"
+            "footer footer";
+        }
+        #secondary {
+            grid-area: sidebar;
+        }
+
+        #tertiary {
+            grid-area: footer;
+        }
+    
+        #content {
+            grid-area: content;
+        }
+    
+        #header {
+            grid-area: header;
+        }
+    
+        #footer {
+            grid-area: footer;
+        }
 
 #header .module-navlinks .module-content {
 	padding-left: 0em;
