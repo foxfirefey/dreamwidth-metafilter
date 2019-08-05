@@ -2,7 +2,22 @@ layerinfo "type" = "theme";
 layerinfo "name" = "Metafilter Blue Light";
 
 set all_entrysubjects = true;
-set comment_indent_style = "responsive";
+set comment_indent_style = "static";
+set entry_date_format = "iso";
+set medium_breakpoint_width = "60em";
+set module_active_order = 2;
+set module_credit_section = "none";
+set module_customtext_section = "header";
+set module_customtext_show = true;
+set module_cuttagcontrols_section = "none";
+set module_navlinks_section_override = "header";
+set module_pagesummary_order = 3;
+set module_poweredby_section = "none";
+set module_search_order = 1;
+set module_userprofile_section = "none";
+set use_custom_friend_colors = true;
+
+set all_entrysubjects = true;
 set use_custom_friend_colors = true;
 
 set color_page_background = "#FFF"; # "#045286";
@@ -21,7 +36,6 @@ set color_module_link_hover = "#76aed1";
 set color_module_link_visited= "#3f8cbc";
 set color_module_title_background = "#e6e6e6";
 set color_module_title = "#000";
-# set color_module_border;
 
 set color_comment_admin_background = "#d5f3ff";
 set color_comment_admin_border = "#88c2d8";
@@ -41,30 +55,6 @@ set color_footer_border = "#88c2d8";
 set color_footer_text = "#FFF";
 set color_footer_link = "#9cc754";
 
-# set color_footer_link_active;
-# set color_footer_link_hover;
-# set color_footer_link_visited;
-
 set color_entry_background = "#fff";
 set color_entry_footer_background = "#f7f7f7";
 set color_entry_footer_text = "#737373";
-# set color_entry_text; -- 
-# set color_entry_link;
-# set color_entry_link_active;
-# set color_entry_link_hover;
-# set color_entry_link_visited;
-# set color_entry_title_background;
-# set color_entry_title;
-# set color_entry_interaction_links;
-# set color_entry_interaction_links_active;
-# set color_entry_interaction_links_hover;
-# set color_entry_interaction_links_visited;
-# set color_entry_border;
-
-# set color_comment_title_background;
-# set color_comment_title;
-
-# set control_strip_bgcolor;
-# set control_strip_fgcolor;
-# set control_strip_bordercolor;
-# set control_strip_linkcolor;
