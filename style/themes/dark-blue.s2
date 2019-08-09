@@ -4,29 +4,42 @@ layerinfo "name" = "Metafilter Blue Dark";
 set all_entrysubjects = true;
 set comment_indent_style = "responsive";
 set use_custom_friend_colors = true;
+set theme_alternate_on_links = true;
+set theme_alternate_style_id = 3648529;
 
-set color_page_background = "#FFF"; # "#045286";
-set color_page_text = "#000";
-set color_page_link = "#005b95";
-set color_page_link_active = "#76aed1";
-set color_page_link_hover = "#76aed1";
-set color_page_link_visited = "#3f8cbc";
+set module_active_order = 2;
+set module_credit_section = "none";
+set module_customtext_section = "header";
+set module_customtext_show = true;
+set module_cuttagcontrols_section = "none";
+set module_navlinks_section_override = "header";
+set module_pagesummary_order = 3;
+set module_poweredby_section = "none";
+set module_search_order = 1;
+set module_userprofile_section = "none";
+
+set color_page_background = "#065a8f";
+set color_page_text = "#ffffff";
+set color_page_link = "#9cc754";
+set color_page_link_active = "#9cc754";
+set color_page_link_hover = "#9cc754";
+set color_page_link_visited = "#9cc754";
 set color_page_border = "#9CC754";
 
-set color_module_background = "#f7f7f7";
-set color_module_text = "#000";
+set color_module_background = "#045286";
+set color_module_text = "#ffffff";
+set color_module_title = "#ffffff";
+set color_module_title_background = "#033d63";
 set color_module_link_active = "#76aed1";
 set color_module_link_hover = "#76aed1";
 set color_module_link_visited= "#3f8cbc";
-set color_module_title_background = "#e6e6e6";
-set color_module_title = "#000";
 
 set color_comment_admin_background = "#d5f3ff";
 set color_comment_admin_border = "#88c2d8";
 set color_comment_screened_background = "#fcf8e3";
 set color_comment_screened_border = "#f7ecb5";
-set color_comment_frozen_background = "#e6e6e6";
-set color_comment_frozen_border = "#b7b7b7";
+set color_comment_frozen_background = "#032a42";
+set color_comment_frozen_border = "#b7e3ff";
 
 set color_header_background = "#045286";
 set color_header_title = "#FFF";
@@ -39,6 +52,7 @@ set color_footer_border = "#88c2d8";
 set color_footer_text = "#FFF";
 set color_footer_link = "#9cc754";
 
-set color_entry_background = "#fff";
-set color_entry_footer_background = "#f7f7f7";
-set color_entry_footer_text = "#737373";
+set color_entry_background = "#065a8f";
+set color_entry_footer_background = "#045286";
+set color_entry_footer_text = "#ccc";
+set color_entry_text = "#ffffff";
