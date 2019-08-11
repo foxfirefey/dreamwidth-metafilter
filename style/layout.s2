@@ -1,4 +1,4 @@
-layerinfo "type" = "layout";
+    layerinfo "type" = "layout";
  
 # put the layout's name here
 layerinfo "name" = "Metafilter";
@@ -17,6 +17,7 @@ layerinfo "source_viewable" = 1;
 property string theme_default_name { des = "Name of the default theme"; }
 property string theme_alternate_name { des = "Name of the alternate theme"; }
 property int theme_alternate_style_id { des = "ID of the alternate style"; }
+property bool theme_alternate_on_links  { des = "Use the alternate theme in comment interaction links; set to true if this is the alternate theme."; }
 
 propgroup presentation {
     property use layout_type;
@@ -64,6 +65,7 @@ propgroup presentation {
 set theme_default_name = "Light";
 set theme_alternate_name = "Dark";
 set theme_alternate_style_id = 3646376;
+set theme_alternate_on_links = false;
 
 set layout_type = "one-column";
 set sidebar_width = "15em";
@@ -387,23 +389,24 @@ function EntryPage::print_comment (Comment c) {
     """<div class="footer">\n""";
     """<div class="inner">\n""";
     $c->print_userpic();
+    if ($this.multiform_on) {
+        """<span class="multiform-checkbox">""";
+        print safe " <label for='ljcomsel_$c.talkid'>$*text_multiform_check</label> ";
+        $c->print_multiform_check();
+    "</span>";
     """<div class="postedbyon">""";  
     $c->print_poster();
     " on ";
     $c->print_time();
     """</div>""";
     $c->print_metadata();
-    if ($this.multiform_on) {
-        """<span class="multiform-checkbox">""";
-        print safe " <label for='ljcomsel_$c.talkid'>$*text_multiform_check</label> ";
-        $c->print_multiform_check();
-    "</span>";
+
     }
     $c->print_management_links();
     $c->print_interaction_links();
   
     $c->print_reply_container();
-    "</div>\n</div>\n";
+    """<div class="footer-end"></div></div>\n</div>\n""";
     $c->print_wrapper_end();
 }
 
@@ -483,6 +486,52 @@ function Entry::print_interaction_links(string target)
     }
 }
 
+function Comment::print_interaction_links()
+"Prints comment interaction links, aka reply/thread/parent/expand."
+{
+    var string display_type = ($*comment_interaction_links == "text") ? " text-links" : " icon-links";
+    # we are going to add this to the interaction links if we're using an alternate theme
+    var string s2idarg = $*theme_alternate_on_links ? "&s2id=$*theme_alternate_style_id" : "";
+
+    """<ul class="comment-interaction-links$display_type">""";
+    print safe """<li class="link commentpermalink first-item"><a href="$this.permalink_url">$*text_comment_link</a></li>\n""";
+    if ($this.threadroot_url != "") { print safe """<li class="link threadroot"><a href="$this.threadroot_url$s2idarg">$*text_comment_threadroot</a></li>\n""";}
+    if ($this.parent_url != "") { print safe """<li class="link commentparent"><a href="$this.parent_url$s2idarg">$*text_comment_parent</a></li>\n"""; }
+    if ($this.thread_url != "") {
+        print safe """<li class="link thread"><a href="$this.thread_url$s2idarg">$*text_comment_thread</a></li>\n""";
+    }
+    var Link expand_link = $this->get_link("expand_comments");
+    if (defined $expand_link) {
+        """<li class="link expand">""";
+        $this->print_expand_link();
+        """</li>\n""";
+    }
+    var Link hide_link = $this->get_link("hide_comments");
+    if (defined $hide_link) {
+         var string show_hide = "";
+         if (not $this.hide_children) {
+             $show_hide = " cmt_show_hide_default";
+         }
+        """<li class="link cmt_hide$show_hide" style="display:none;" id="cmt${this.talkid}_hide">""";
+        $this->print_hide_link();
+        """</li>\n""";
+    }
+    var Link unhide_link = $this->get_link("unhide_comments");
+    if (defined $unhide_link) {
+        var string show_hide = "";
+        """<li class="link cmt_unhide$show_hide" style="display: none;" id="cmt${this.talkid}_unhide">""";
+        $this->print_unhide_link();
+        """</li>\n""";
+    }
+    if ($this.frozen) {
+        print safe """<li class="frozen">$*text_comment_frozen</li>\n""";
+    } else {
+        """<li class="link reply">""";
+        $this->print_reply_link({"linktext" => $*text_comment_reply});
+        """</li>\n""";
+    }    
+    """</ul>""";
+}
 
 # this is the function that prints out the stylesheet of the layout
 function Page::print_default_stylesheet() {
@@ -585,6 +634,26 @@ body {
 	background-color: $*color_page_background;
 }
 
+/* previous/next aligned against edges */
+.navigation .inner ul {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0em;
+    list-style: none;
+  }
+.navigation .inner ul li.page-separator {
+    display: none;
+}
+
+.entry .header .inner {
+    display: flex;
+    justify-content: flex-start;
+    align-items: baseline;
+}
+
+.entry .header .inner .restrictions { order: 1; margin-right: .5em; }
+.entry .header .inner .entry-title { order: 2 }
+
 a {
 	color: $*color_page_link;
     text-decoration: none;
@@ -643,13 +712,17 @@ q {
 .comment .footer {
 	margin-top: .5em;
 	background-color: $*color_entry_footer_background;
-    min-height: 50px;
 }
 
+.comment .footer .inner { margin: .5em; }
+
+/*
 .comment .footer .userpic img {
     max-height: 50px;
     max-width: 50px;
-}
+}*/
+
+.userpic { display: none; }
 
 #comments .separator {
 	display: none;
@@ -659,16 +732,29 @@ q {
 	display: block;
     font-size: smaller;
     margin-bottom: .25em;
+    float: left;
 }
+
+.comment-interaction-links { float: right; }
+
+/* I know what the checkbox is for */
+.multiform-checkbox label { display: none; }
 
 .comment .postedbyon { padding-top: .5em; }
 
+.comment .footer {
+    font-size: smaller;
+}
+
 .postedbyon, .metadata, .entry .footer .tag {
-  font-size: smaller;
   margin-left: .2em;
 }
 
-.comment-management-links, .comment-interaction-links, .poster-ip, .multiform-checkbox { margin-left: .2em; }
+.comment-management-links, .comment-interaction-links, .poster-ip, .multiform-checkbox { margin-left: .5em; margin-top: .5em; margin-right: .5em; }
+
+.comment-interation-links li { margin-left: .5em; margin-right: .25em; }
+
+.footer-end {clear: both; }
 
 .edittime {
 	margin-top: .25em;
@@ -707,6 +793,8 @@ q {
   background-color: $*color_page_link;
   color: $*color_entry_background;
   border-radius: 8px;
+  padding-left: .5em;
+  padding-right: .5em;
 }
 
 .entry-replylink a:hover, .entry-replylink a:focus,
@@ -825,6 +913,9 @@ hr.below-reply-container {
 	background-color: $*color_entry_background;
 }
 
+/* let's make this a bit more compact since we have the divider bars */
+.comment { margin-bottom: 1em; }
+
 #comments .separator {
 	height: .5em;
 }
@@ -844,6 +935,9 @@ hr.below-reply-container {
 	background-color: $*color_comment_screened_border;
 }
 
+/* Let's make our collapsed comment threads smaller */
+.comment-wrapper.partial { font-size: smaller; }
+
 #footer {
 	background-color: $*color_footer_background;
     color: $*color_footer_text;
@@ -853,6 +947,12 @@ hr.below-reply-container {
 
 #footer a {
 	color: $*color_footer_link;
+}
+
+
+.module-customtext {
+    container: flex;
+
 }
 
 /* SMALL ONLY */
@@ -875,11 +975,8 @@ hr.below-reply-container {
 #header .module-navlinks ul {
 	list-style: none;
 	margin: 0em;
-	padding: 0em;
+    padding: 0em;
 }
-
-#header .module-navlinks li {
- }
 
  
 }
@@ -893,11 +990,19 @@ hr.below-reply-container {
     padding-left: 1rem;
   }
 
-  /* we can afford bigger userpics */
+  #header .module-navlinks li {
+    margin-right: 1em;
+ }
+
+  /* if we wanted bigger userpics, but let's try being tiny all sizes
   .comment .footer .userpic img {
     max-height: 100px;
     max-width: 100px;
-  }
+  } */
+
+  .multiform-checkbox { float: left;}
+  .postedbyon { float: left; }
+  .comment-management-links { float: left; }
 
   #canvas {
     display: grid;
