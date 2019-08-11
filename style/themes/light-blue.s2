@@ -4,9 +4,11 @@ layerinfo "name" = "Metafilter Blue Light";
 set all_entrysubjects = true;
 set comment_indent_style = "static";
 set entry_date_format = "iso";
-set medium_breakpoint_width = "60em";
+set large_breakpoint_width = "60em";
+set medium_breakpoint_width = "40em";
 set use_custom_friend_colors = true;
 set theme_alternate_on_links = false;
+set theme_alternate_style_id = 3646376;
 
 set module_active_order = 2;
 set module_credit_section = "none";
