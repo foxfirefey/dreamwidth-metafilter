@@ -100,6 +100,10 @@ property Color color_comment_frozen_border { des = "Frozen border background col
 property Color color_footer_border { des = "Footer border color"; }
 property Color color_footer_text { des = "Footer text color"; }
 
+property Color color_entry_external_links { des = "External link color in entries or comments" }
+property Color color_entry_external_links_visited { des = "Visited external link color in entries or comments" }
+property Color color_entry_external_links_hover { des = "Hover external link color in entries or comments" }
+
 propgroup colors {
     property use color_page_background;
     property use color_page_text;
@@ -145,6 +149,9 @@ propgroup colors {
     property use color_entry_interaction_links_active;
     property use color_entry_interaction_links_hover;
     property use color_entry_interaction_links_visited;
+    property use color_entry_external_links;
+    property use color_entry_external_links_visited;
+    property use color_entry_external_links_hover;   
     property use color_entry_border;
     property use color_entry_footer_background;
     property use color_entry_footer_text;
@@ -541,12 +548,45 @@ function Page::print_default_stylesheet() {
   
 """
 
+/* GENERAL */
+
 body {
 	font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
 	background-color: $*color_page_background;
     color: $*color_page_text;
     line-height: 1.4em;
 }
+
+a {
+	color: $*color_page_link;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:visited {
+	color: $*color_page_link_visited;
+}
+
+a:hover,a:focus {
+    color: $*color_page_link_hover;
+    text-decoration: underline;
+}
+
+a:active {
+    color: $*color_page_link_active;
+}
+
+a:focus{
+    outline: thin dotted;
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px
+}
+
+q {
+	font-style: italic;
+}
+
+/* HEADER */
 
 #header {
 	background-color: $*color_header_background;
@@ -645,6 +685,8 @@ body {
     display: none;
 }
 
+/* ENTRY */
+
 .entry .header .inner {
     display: flex;
     justify-content: flex-start;
@@ -654,33 +696,19 @@ body {
 .entry .header .inner .restrictions { order: 1; margin-right: .5em; }
 .entry .header .inner .entry-title { order: 2 }
 
-a {
-	color: $*color_page_link;
-    text-decoration: none;
-    font-weight: bold;
+.entry-content a[href*="//"]:not([href*="dreamwidth.org"]),
+.comment-content a[href*="//"]:not([href*="dreamwidth.org"]) {
+    color: $*color_entry_external_links;
 }
 
-a:visited {
-	color: $*color_page_link_visited;
+.entry-content a[href*="//"]:not([href*="dreamwidth.org"]):visited,
+.comment-content a[href*="//"]:not([href*="dreamwidth.org"]):visited {
+    color: $*color_entry_external_links_visited;
 }
 
-a:hover,a:focus {
-    color: $*color_page_link_hover;
-    text-decoration: underline;
-}
-
-a:active {
-    color: $*color_page_link_active;
-}
-
-a:focus{
-    outline:thin dotted;
-    outline:5px auto -webkit-focus-ring-color;
-    outline-offset:-2px
-}
-
-q {
-	font-style: italic;
+.entry-content a[href*="//"]:not([href*="dreamwidth.org"]):hover,
+.comment-content a[href*="//"]:not([href*="dreamwidth.org"]):hover {
+    color: $*color_entry_external_links_hover;
 }
 
 .comment-content img,
@@ -692,7 +720,90 @@ q {
 	margin-bottom: .5em;
 }
 
+.entry .footer .tag { clear: left; margin-top: .5em; }
+.entry .footer .tag ul { display: flex; list-style: none; padding-left: 0em; flex-wrap: wrap; }
+.entry .footer .tag li { margin-left: 1em; }
+
+.postedbyon, .metadata, .entry .footer .tag {
+  margin-left: .2em;
+}
+
+.entry-title {
+    margin-top: 0em;
+}
+
+.entry-replylink {
+    float: right;
+}
+
+.entry .footer {
+	background-color: $*color_entry_footer_background;
+	color: $*color_entry_footer_text;
+	padding: .5em;
+	margin-top: .5em;
+}
+
+.entry .content {
+	margin-bottom: .5em;
+}
+
+/* ENTRIES AND COMMENTS */
+
+.entry-management-links,
+.entry-interaction-links,
+.comment-management-links,
+.comment-interaction-links {
+	list-style: none;
+	padding-left: 0em;
+	margin-top: .5em;
+	margin-bottom: .5em;
+}
+
+.entry-management-links li,
+.entry-interaction-links li,
+.comment-management-links li,
+.comment-interaction-links li {
+	display: inline-block;
+}
+
+.entry-interaction-links li a, .comment-interaction-links .reply a {
+    display: inline-block;
+    padding: .2em;
+}
+
+.entry-replylink a, .comment-interaction-links .reply a {
+  display: inline-block;
+  background-color: $*color_page_link;
+  color: $*color_entry_background;
+  border-radius: 8px;
+  padding-left: .5em;
+  padding-right: .5em;
+}
+
+.entry-replylink a:hover, .entry-replylink a:focus,
+.comment-interaction-links .reply a:hover, .comment-interaction-links .reply a:visited {
+	color: $*color_entry_footer_background;
+    text-decoration: none;
+}
+
+.entry,
+.comment {
+	margin-bottom: 2em;
+	clear: both;
+	margin-left: .5em;
+	background-color: $*color_entry_background;
+}
+
+/* COMMENTS */
+
 /* Make collapsed threads take up much less space */
+
+/*
+.userpic {
+	float: right;
+    padding-left: .1em;
+}
+*/
 
 .comment-title {
 	margin-top: .5em;
@@ -744,15 +855,6 @@ q {
     font-size: smaller;
 }
 
-.postedbyon, .metadata, .entry .footer .tag {
-  margin-left: .2em;
-}
-
-.entry .footer .tag { clear: left; margin-top: .5em; }
-.entry .footer .tag ul { display: flex; list-style: none; padding-left: 0em; flex-wrap: wrap; }
-.entry .footer .tag li { margin-left: 1em; }
-
-
 .comment-management-links, .comment-interaction-links, .poster-ip, .multiform-checkbox { margin-left: .5em; margin-top: .5em; margin-right: .5em; }
 .comment-interaction-links { float: right; }
 .comment-interaction-links li { margin-left: .5em; margin-right: .25em; }
@@ -765,68 +867,12 @@ q {
     font-size: smaller;
 }
 
-.entry-title {
-    margin-top: 0em;
-}
-
-.entry-management-links,
-.entry-interaction-links,
-.comment-management-links,
-.comment-interaction-links {
-	list-style: none;
-	padding-left: 0em;
-	margin-top: .5em;
-	margin-bottom: .5em;
-}
-
-.entry-management-links li,
-.entry-interaction-links li,
-.comment-management-links li,
-.comment-interaction-links li {
-	display: inline-block;
-}
-
-.entry-interaction-links li a, .comment-interaction-links .reply a {
-    display: inline-block;
-    padding: .2em;
-}
-
-.entry-replylink a, .comment-interaction-links .reply a {
-  display: inline-block;
-  background-color: $*color_page_link;
-  color: $*color_entry_background;
-  border-radius: 8px;
-  padding-left: .5em;
-  padding-right: .5em;
-}
-
-.entry-replylink a:hover, .entry-replylink a:focus,
-.comment-interaction-links .reply a:hover, .comment-interaction-links .reply a:visited {
-	color: $*color_entry_footer_background;
-    text-decoration: none;
-}
-
-.entry-replylink {
-    float: right;
-}
-
 hr.above-entry-interaction-links {
 	display: none;
 }
 
 hr.below-reply-container {
 	display: none;
-}
-
-.entry .footer {
-	background-color: $*color_entry_footer_background;
-	color: $*color_entry_footer_text;
-	padding: .5em;
-	margin-top: .5em;
-}
-
-.entry .content {
-	margin-bottom: .5em;
 }
 
 .comment-pages {
@@ -836,6 +882,36 @@ hr.below-reply-container {
     padding: .5em;
     background-color: $*color_entry_footer_background;
 }
+
+/* let's make this a bit more compact since we have the divider bars */
+.comment { margin-bottom: 1em; }
+
+.comment-title a { color: $*color_page_text; }
+
+#comments .separator {
+	height: .5em;
+}
+
+.comment-wrapper.admin-post .comment {
+	border-left: 2px solid $*color_comment_admin_border;
+	background-color: $*color_comment_admin_background;
+}
+
+.comment-wrapper.frozen .comment {
+	border-left: 2px solid $*color_comment_frozen_border;
+	background-color: $*color_comment_frozen_background;
+}
+
+.comment-wrapper.screened .comment {
+	border-left: 2px solid $*color_comment_screened_border;
+	background-color: $*color_comment_screened_border;
+}
+
+/* Let's make our collapsed comment threads smaller */
+.comment-wrapper.partial { font-size: smaller; color: $*color_entry_footer_text;}
+
+
+/* MODULES */
 
 .module {
 	background-color: $*color_module_background;
@@ -869,7 +945,6 @@ hr.below-reply-container {
     margin-bottom: .25em;
 }
 
-
 .module .module-header {
 	margin-bottom: 0em;
 }
@@ -890,7 +965,6 @@ hr.below-reply-container {
   color: $*color_module_link_visited;
 }
 
-
 .module-typelist ul,
 .module-tags_list ul {
 }
@@ -909,45 +983,12 @@ hr.below-reply-container {
 	margin-left: .25em;
 }
 
-.userpic {
-	float: right;
-    padding-left: .1em;
+.module-customtext {
+    container: flex;
+
 }
 
-.entry,
-.comment {
-	margin-bottom: 2em;
-	clear: both;
-	margin-left: .5em;
-	background-color: $*color_entry_background;
-}
-
-/* let's make this a bit more compact since we have the divider bars */
-.comment { margin-bottom: 1em; }
-
-.comment-title a { color: $*color_page_text; }
-
-#comments .separator {
-	height: .5em;
-}
-
-.comment-wrapper.admin-post .comment {
-	border-left: 2px solid $*color_comment_admin_border;
-	background-color: $*color_comment_admin_background;
-}
-
-.comment-wrapper.frozen .comment {
-	border-left: 2px solid $*color_comment_frozen_border;
-	background-color: $*color_comment_frozen_background;
-}
-
-.comment-wrapper.screened .comment {
-	border-left: 2px solid $*color_comment_screened_border;
-	background-color: $*color_comment_screened_border;
-}
-
-/* Let's make our collapsed comment threads smaller */
-.comment-wrapper.partial { font-size: smaller; color: $*color_entry_footer_text;}
+/* FOOTER */
 
 #footer {
 	background-color: $*color_footer_background;
@@ -960,39 +1001,84 @@ hr.below-reply-container {
 	color: $*color_footer_link;
 }
 
+/* ARCHIVE */
 
-.module-customtext {
-    container: flex;
+.page-archive .navigation ul {
+    display: flex;
+    flex-wrap: wrap;
+}
+.page-archive .navigation ul li {
+}
 
+table.month {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+table.month caption {
+    display: none;
+}
+table.month td {
+    height: 3.25em;
+    min-width: 3.25em;
+    padding: .5em;
+    vertical-align: top;
+}
+table.month td,
+table.month th {
+    border: 1px solid; /* ? */
+    padding: 3px;
+}
+table.month td p {
+    margin: 0;
+    padding: 3px;
+    text-align: right;
+}
+table.month td p a {
+    display: block;
+}
+
+table.month .day-empty { background-color: $*color_entry_footer_background; }
+
+.month dl dt {
+    font-weight: bold;
+}
+.month dl .time {
+    padding-right: .5em;
+}
+.month dl h3 {
+    display: inline;
+    font-size: medium;
+}
+.page-month .month .entry-poster {
+    margin-right: .5em;
+}
+.month dl .tag ul {
+    margin-top: 0;
 }
 
 /* SMALL ONLY */
 
 @media $small_media_query {
-#header .module-navlinks {
-	background-color: #88C2D8;
-	padding-left: 1rem;
+    #header .module-navlinks {
+    	background-color: #88C2D8;
+    	padding-left: 1rem;
+    }
+    
+    #header .module-navlinks .module-content {
+    	padding-left: 0em;
+    	padding-right: 0em;
+    }
+    
+    #header .module-navlinks a {
+    	color: #065a8f;
+    }
+    
+    #header .module-navlinks ul {
+    	list-style: none;
+    	margin: 0em;
+        padding: 0em;
+    }
 }
-
-#header .module-navlinks .module-content {
-	padding-left: 0em;
-	padding-right: 0em;
-}
-
-#header .module-navlinks a {
-	color: #065a8f;
-}
-
-#header .module-navlinks ul {
-	list-style: none;
-	margin: 0em;
-    padding: 0em;
-}
-
- 
-}
-
-
 
 /* MEDIUM AND ABOVE */
 
@@ -1024,82 +1110,47 @@ hr.below-reply-container {
             "content sidebar"
             "tertiary tertiary"
             "footer footer";
-        }
-        #secondary {
-            grid-area: sidebar;
-        }
+    }
 
-        #tertiary {
-            grid-area: footer;
-        }
+    #secondary {
+        grid-area: sidebar;
+    }
+
+    #tertiary {
+        grid-area: footer;
+    }
+
+    #content {
+        grid-area: content;
+    }
+
+    #header {
+        grid-area: header;
+    }
+
+    #footer {
+        grid-area: footer;
+    }
+
+    #header .module-navlinks .module-content {
+    	padding-left: 0em;
+    	padding-right: 0em;
+    }
     
-        #content {
-            grid-area: content;
-        }
+    #header .module-navlinks ul {
+    	list-style: none;
+    	margin: 0em;
+    	padding: 0em;
+    }
     
-        #header {
-            grid-area: header;
-        }
-    
-        #footer {
-            grid-area: footer;
-        }
-
-#header .module-navlinks .module-content {
-	padding-left: 0em;
-	padding-right: 0em;
-}
-
-#header .module-navlinks ul {
-	list-style: none;
-	margin: 0em;
-	padding: 0em;
-}
-
-#header .module-navlinks li {
-	display: inline-block;
-}
+    #header .module-navlinks li {
+    	display: inline-block;
+    }
 }
 
 /* LARGE AND ABOVE */
 
 @media $large_media_query {
-}
-
-/* archive */
-
-table.month {
-    margin: 0 auto;
-    border-collapse: collapse;
-}
-table.month td {
-    height: 3.25em;
-}
-table.month td,
-table.month th {
-    border: 1px solid; /* ? */
-    padding: 3px;
-}
-table.month td p {
-    margin: 0;
-    padding: 3px;
-}
-
-.month dl dt {
-    font-weight: bold;
-}
-.month dl .time {
-    padding-right: .5em;
-}
-.month dl h3 {
-    display: inline;
-    font-size: medium;
-}
-.page-month .month .entry-poster {
-    margin-right: .5em;
-}
-.month dl .tag ul {
-    margin-top: 0;
 }
 
 """;
