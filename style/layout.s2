@@ -394,6 +394,7 @@ function EntryPage::print_comment (Comment c) {
         print safe " <label for='ljcomsel_$c.talkid'>$*text_multiform_check</label> ";
         $c->print_multiform_check();
     "</span>";
+    }
     """<div class="postedbyon">""";  
     $c->print_poster();
     " on ";
@@ -401,7 +402,6 @@ function EntryPage::print_comment (Comment c) {
     """</div>""";
     $c->print_metadata();
 
-    }
     $c->print_management_links();
     $c->print_interaction_links();
   
