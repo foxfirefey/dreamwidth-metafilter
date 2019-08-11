@@ -735,8 +735,6 @@ q {
     float: left;
 }
 
-.comment-interaction-links { float: right; }
-
 /* I know what the checkbox is for */
 .multiform-checkbox label { display: none; }
 
@@ -750,11 +748,16 @@ q {
   margin-left: .2em;
 }
 
+.entry .footer .tag { clear: left; margin-top: .5em; }
+.entry .footer .tag ul { display: flex; list-style: none; padding-left: 0em; flex-wrap: wrap; }
+.entry .footer .tag li { margin-left: 1em; }
+
+
 .comment-management-links, .comment-interaction-links, .poster-ip, .multiform-checkbox { margin-left: .5em; margin-top: .5em; margin-right: .5em; }
+.comment-interaction-links { float: right; }
+.comment-interaction-links li { margin-left: .5em; margin-right: .25em; }
 
-.comment-interation-links li { margin-left: .5em; margin-right: .25em; }
-
-.footer-end {clear: both; }
+.footer-end { clear: both; }
 
 .edittime {
 	margin-top: .25em;
@@ -803,6 +806,10 @@ q {
     text-decoration: none;
 }
 
+.entry-replylink {
+    float: right;
+}
+
 hr.above-entry-interaction-links {
 	display: none;
 }
@@ -825,7 +832,9 @@ hr.below-reply-container {
 .comment-pages {
 	text-align: center;
 	margin-top: .5em;
-	margin-bottom: .5em;
+    margin-bottom: .5em;
+    padding: .5em;
+    background-color: $*color_entry_footer_background;
 }
 
 .module {
@@ -916,6 +925,8 @@ hr.below-reply-container {
 /* let's make this a bit more compact since we have the divider bars */
 .comment { margin-bottom: 1em; }
 
+.comment-title a { color: $*color_page_text; }
+
 #comments .separator {
 	height: .5em;
 }
@@ -936,7 +947,7 @@ hr.below-reply-container {
 }
 
 /* Let's make our collapsed comment threads smaller */
-.comment-wrapper.partial { font-size: smaller; }
+.comment-wrapper.partial { font-size: smaller; color: $*color_entry_footer_text;}
 
 #footer {
 	background-color: $*color_footer_background;
