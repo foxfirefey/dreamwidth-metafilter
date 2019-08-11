@@ -361,7 +361,7 @@ function Page::print_entry(Entry e)
     $e->print_metadata();
     $e->print_tags();
     $this->print_entry_footer($e);
-    "</div>\n</div>\n";
+    """<div class="footer-end"></div></div>\n</div>\n""";
 
     $e->print_wrapper_end();
 }
