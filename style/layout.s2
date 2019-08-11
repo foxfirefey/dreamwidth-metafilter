@@ -1066,5 +1066,41 @@ hr.below-reply-container {
 @media $large_media_query {
 }
 
+/* archive */
+
+table.month {
+    margin: 0 auto;
+    border-collapse: collapse;
+}
+table.month td {
+    height: 3.25em;
+}
+table.month td,
+table.month th {
+    border: 1px solid; /* ? */
+    padding: 3px;
+}
+table.month td p {
+    margin: 0;
+    padding: 3px;
+}
+
+.month dl dt {
+    font-weight: bold;
+}
+.month dl .time {
+    padding-right: .5em;
+}
+.month dl h3 {
+    display: inline;
+    font-size: medium;
+}
+.page-month .month .entry-poster {
+    margin-right: .5em;
+}
+.month dl .tag ul {
+    margin-top: 0;
+}
+
 """;
 }
